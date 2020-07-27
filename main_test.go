@@ -23,7 +23,7 @@ func TestLuceneQuery(t *testing.T) {
 	assert.Equal(t, `(title:"foo bar" AND body:"quick fox")`, q)
 
 	q = lq.New(lq.Or{
-		[]lq.Clause{
+		lq.Clauses(
 			lq.And{
 				[]lq.Clause{
 					lq.Term{"title", "foo bar"},
@@ -31,15 +31,15 @@ func TestLuceneQuery(t *testing.T) {
 				},
 			},
 			lq.Term{"title", "fox"},
-		},
+		),
 	}).String()
 	assert.Equal(t, `((title:"foo bar" AND body:"quick fox") OR title:fox)`, q)
 
 	q = lq.New(lq.NOOP{
-		[]lq.Clause{
+		lq.Clauses(
 			lq.Term{"title", "foo"},
 			lq.Not{lq.Term{"title", "bar"}},
-		},
+		),
 	}).String()
 	assert.Equal(t, `(title:foo -title:bar)`, q)
 
@@ -52,16 +52,10 @@ func TestLuceneQuery(t *testing.T) {
 	q = lq.New(lq.NOOP{
 		[]lq.Clause{
 			lq.Boost{lq.Or{
-				[]lq.Clause{
-					lq.Term{"title", "foo"},
-					lq.Term{"title", "bar"},
-				},
+				lq.Clauses(lq.Term{"title", "foo"}, lq.Term{"title", "bar"}),
 			}, 1.5},
 			lq.Or{
-				[]lq.Clause{
-					lq.Term{"body", "foo"},
-					lq.Term{"body", "bar"},
-				},
+				lq.Clauses(lq.Term{"body", "foo"}, lq.Term{"body", "bar"}),
 			},
 		},
 	}).String()

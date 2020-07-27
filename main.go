@@ -9,6 +9,10 @@ type Clause interface {
 	String() string
 }
 
+func Clauses(c ...Clause) []Clause {
+	return c
+}
+
 type Query struct {
 	Clause Clause
 }
