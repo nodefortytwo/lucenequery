@@ -4,15 +4,15 @@
  ## Example
 ```go
 q = lq.New(lq.Or{
-	[]lq.Clause{
-		lq.And{
-			[]lq.Clause{
-				lq.Term{"title", "foo bar"},
-				lq.Term{"body", "quick fox"},
-			},
-		},
-		lq.Term{"title", "fox"},
-	},
+  []lq.Clause{
+    lq.And{
+      []lq.Clause{
+        lq.Term{"title", "foo bar"},
+        lq.Term{"body", "quick fox"},
+      },
+    },
+    lq.Term{"title", "fox"},
+  },
 }).String()
 ```
 
