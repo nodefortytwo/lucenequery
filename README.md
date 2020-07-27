@@ -3,17 +3,13 @@
  
  ## Example
 ```go
-q = lq.New(lq.Or{
-  []lq.Clause{
-    lq.And{
-      []lq.Clause{
-        lq.Term{"title", "foo bar"},
-        lq.Term{"body", "quick fox"},
-      },
-    },
+  q = lq.New(lq.Or(
+    lq.And(
+      lq.Term{"title", "foo bar"},
+      lq.Term{"body", "quick fox"},
+    ),
     lq.Term{"title", "fox"},
-  },
-}).String()
+  )).String()
 ```
 
 would create

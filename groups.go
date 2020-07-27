@@ -2,11 +2,15 @@ package lucenequery
 
 import "strings"
 
-type And struct {
+func And(c ...Clause) Clause {
+	return AndClause{Clauses: c}
+}
+
+type AndClause struct {
 	Clauses []Clause
 }
 
-func (a And) String() string {
+func (a AndClause) String() string {
 	var parts []string
 	for _, i := range a.Clauses {
 		parts = append(parts, i.String())
@@ -15,11 +19,15 @@ func (a And) String() string {
 	return `(` + strings.Join(parts, " AND ") + `)`
 }
 
-type Or struct {
+func Or(c ...Clause) Clause {
+	return OrClause{Clauses: c}
+}
+
+type OrClause struct {
 	Clauses []Clause
 }
 
-func (a Or) String() string {
+func (a OrClause) String() string {
 	var parts []string
 	for _, i := range a.Clauses {
 		parts = append(parts, i.String())
@@ -28,11 +36,15 @@ func (a Or) String() string {
 	return `(` + strings.Join(parts, " OR ") + `)`
 }
 
-type NOOP struct {
+func NOOP(c ...Clause) Clause {
+	return NOOPClause{Clauses: c}
+}
+
+type NOOPClause struct {
 	Clauses []Clause
 }
 
-func (n NOOP) String() string {
+func (n NOOPClause) String() string {
 	var parts []string
 	for _, i := range n.Clauses {
 		parts = append(parts, i.String())
