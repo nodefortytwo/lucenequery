@@ -10,6 +10,10 @@ type AndClause struct {
 	Clauses []Clause
 }
 
+func (a *AndClause) Add(c Clause) {
+	a.Clauses = append(a.Clauses, c)
+}
+
 func (a AndClause) String() string {
 	var parts []string
 	for _, i := range a.Clauses {
@@ -27,6 +31,10 @@ type OrClause struct {
 	Clauses []Clause
 }
 
+func (a *OrClause) Add(c Clause) {
+	a.Clauses = append(a.Clauses, c)
+}
+
 func (a OrClause) String() string {
 	var parts []string
 	for _, i := range a.Clauses {
@@ -42,6 +50,10 @@ func NOOP(c ...Clause) Clause {
 
 type NOOPClause struct {
 	Clauses []Clause
+}
+
+func (n *NOOPClause) Add(c Clause) {
+	n.Clauses = append(n.Clauses, c)
 }
 
 func (n NOOPClause) String() string {
