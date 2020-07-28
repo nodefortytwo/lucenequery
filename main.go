@@ -25,12 +25,16 @@ func New(c Clause) Query {
 	return Query{Clause: c}
 }
 
-type Term struct {
+func Term(field, value string) Clause {
+	return TermSearch{Field: field, Value: value}
+}
+
+type TermSearch struct {
 	Field string
 	Value string
 }
 
-func (t Term) String() string {
+func (t TermSearch) String() string {
 	pattern := `%s`
 	if hasSpaces(t.Value) {
 		pattern = `"%s"`
@@ -43,13 +47,17 @@ func (t Term) String() string {
 	return fmt.Sprintf(`%s:`+pattern, t.Field, t.Value)
 }
 
-type Range struct {
+func Range(field, to, from string) Clause {
+	return RangeSearch{Field: field, From: to, To: from}
+}
+
+type RangeSearch struct {
 	Field string
 	From  string
 	To    string
 }
 
-func (r Range) String() string {
+func (r RangeSearch) String() string {
 	pattern := `%s:[%s TO %s]`
 
 	return fmt.Sprintf(pattern, r.Field, r.From, r.To)

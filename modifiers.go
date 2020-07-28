@@ -2,28 +2,40 @@ package lucenequery
 
 import "fmt"
 
-type Not struct {
+func Not(c Clause) NotModifier {
+	return NotModifier{c}
+}
+
+type NotModifier struct {
 	Clause Clause
 }
 
-func (n Not) String() string {
+func (n NotModifier) String() string {
 	return fmt.Sprintf(`-%s`, n.Clause)
 }
 
-type Boost struct {
+func Boost(c Clause, m float64) BoostModifier {
+	return BoostModifier{c, m}
+}
+
+type BoostModifier struct {
 	Clause   Clause
 	Modifier float64
 }
 
-func (b Boost) String() string {
+func (b BoostModifier) String() string {
 	return fmt.Sprintf(`%s^%G`, b.Clause, b.Modifier)
 }
 
-type Proximity struct {
+func Proximity(c Clause, m int) ProximityModifier {
+	return ProximityModifier{c, m}
+}
+
+type ProximityModifier struct {
 	Clause   Clause
 	Modifier int
 }
 
-func (p Proximity) String() string {
+func (p ProximityModifier) String() string {
 	return fmt.Sprintf(`%s~%d`, p.Clause, p.Modifier)
 }
