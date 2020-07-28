@@ -5,10 +5,10 @@
 ```go
   q = lq.New(lq.Or(
     lq.And(
-      lq.Term{"title", "foo bar"},
-      lq.Term{"body", "quick fox"},
+      lq.Term("title", "foo bar"},
+      lq.Term("body", "quick fox"},
     ),
-    lq.Term{"title", "fox"},
+    lq.Term("title", "fox"),
   )).String()
 ```
 
