@@ -2,7 +2,7 @@ package lucenequery
 
 import "strings"
 
-func And(c ...Clause) Clause {
+func And(c ...Clause) AndClause {
 	return AndClause{Clauses: c}
 }
 
@@ -23,7 +23,7 @@ func (a AndClause) String() string {
 	return `(` + strings.Join(parts, " AND ") + `)`
 }
 
-func Or(c ...Clause) Clause {
+func Or(c ...Clause) OrClause {
 	return OrClause{Clauses: c}
 }
 
@@ -44,7 +44,7 @@ func (a OrClause) String() string {
 	return `(` + strings.Join(parts, " OR ") + `)`
 }
 
-func NOOP(c ...Clause) Clause {
+func NOOP(c ...Clause) NOOPClause {
 	return NOOPClause{Clauses: c}
 }
 

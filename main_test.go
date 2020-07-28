@@ -48,3 +48,20 @@ func TestLuceneQuery(t *testing.T) {
 	assert.Equal(t, `((title:foo OR title:bar)^1.5 (body:foo OR body:bar))`, q)
 
 }
+
+func TestAdd(t *testing.T) {
+	or := lq.Or()
+	or.Add(lq.Term("foo", "bar"))
+	or.Add(lq.Term("baz", "buz"))
+	assert.Equal(t, `(foo:bar OR baz:buz)`, or.String())
+
+	and := lq.And()
+	and.Add(lq.Term("foo", "bar"))
+	and.Add(lq.Term("baz", "buz"))
+	assert.Equal(t, `(foo:bar AND baz:buz)`, and.String())
+
+	noop := lq.NOOP()
+	noop.Add(lq.Term("foo", "bar"))
+	noop.Add(lq.Term("baz", "buz"))
+	assert.Equal(t, `(foo:bar baz:buz)`, noop.String())
+}
