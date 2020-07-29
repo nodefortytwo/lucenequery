@@ -15,6 +15,9 @@ func (a *AndClause) Add(c Clause) {
 }
 
 func (a AndClause) String() string {
+	if len(a.Clauses) == 0 {
+		return ""
+	}
 	var parts []string
 	for _, i := range a.Clauses {
 		parts = append(parts, i.String())
@@ -36,6 +39,10 @@ func (a *OrClause) Add(c Clause) {
 }
 
 func (a OrClause) String() string {
+	if len(a.Clauses) == 0 {
+		return ""
+	}
+
 	var parts []string
 	for _, i := range a.Clauses {
 		parts = append(parts, i.String())
@@ -57,6 +64,10 @@ func (n *NOOPClause) Add(c Clause) {
 }
 
 func (n NOOPClause) String() string {
+	if len(n.Clauses) == 0 {
+		return ""
+	}
+
 	var parts []string
 	for _, i := range n.Clauses {
 		parts = append(parts, i.String())
